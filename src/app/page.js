@@ -7,22 +7,20 @@ import Footer from "../components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen max-h-screnn w-screen  flex flex-col justify-between p-4">
+    <div className="min-h-screen max-h-screen min-w-screen max-w-screen flex flex-col p-1">
       <Header />
-      <main className="flex w-full  justify-between ">
-        <div className="w-[80%] flex ">
+      <main className="flex w-full gap-x-[50px] ">
+        <div className="w-[70%] flex flex-col ">
+          <div className="w-full flex gap-x-4 ">
             <FileUpload />
-          <CoordinateSystemSelector />
+            <CoordinateSystemSelector />
+          </div>
         </div>
-          
-        
-        <div className="w-[30%] flex flex-col max-w-[300px]">
 
+        <div className="w-[30%] flex flex-col">
           <DownloadExample />
           <CsvSpecification />
-
         </div>
-
       </main>
       <Footer />
     </div>

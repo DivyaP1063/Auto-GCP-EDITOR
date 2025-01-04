@@ -3,6 +3,8 @@
 import { useState, useRef } from "react";
 import Papa from "papaparse";
 import FileTable from "./FileTable"; // Import the FileTable component
+import { useDispatch } from "react-redux";
+import { setCoordinates } from "../app/slices/coordinatesSlice"; 
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
@@ -11,6 +13,7 @@ const FileUpload = () => {
   const [tableData, setTableData] = useState([]);
   const [isReady, setIsReady] = useState(false);
   const fileInputRef = useRef(null);
+  const dispatch = useDispatch();
 
   // Allowed Header Templates
   const validHeaders = [
@@ -116,7 +119,15 @@ const FileUpload = () => {
       }
     }
 
+      const coordinates = rows.slice(1).map(row => ({
+      label: row[0],
+      latitude: parseFloat(row[1]),  // Assuming lat, long format
+      longitude: parseFloat(row[2]), // Adjust based on the CSV format
+      elevation: parseFloat(row[3]),
+    }));
+
     // Set CSV header and descriptor
+    dispatch(setCoordinates(coordinates)); // Store coordinates in Redux
     setCsvHeader(headers);
     setTableData(rows.slice(1)); // Set rows excluding header
     setIsReady(true);
@@ -124,9 +135,11 @@ const FileUpload = () => {
   };
 
   return (
-    <div className="p-4">
-      <label htmlFor="fileUpload" className="block mb-2">
-       {file? <p className="mt-2">{file.name}</p>:<p>Choose a .CSV or .TXT file with GCP coordinates</p>}
+    <div className="flex flex-col gay-y-2">
+    <div className=" w-full h-fit p-1 flex gap-x-3 justify-between items-center border-2 rounded-md">
+
+      <label htmlFor="fileUpload" className=" border-2 ">
+       {file? <p className="">{file.name}</p>:<p>Choose a .CSV or .TXT file with GCP coordinates</p>}
       </label>
       <input
         ref={fileInputRef}
@@ -138,13 +151,15 @@ const FileUpload = () => {
       />
       <button
         onClick={() => fileInputRef.current.click()}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
+        className="bg-blue-500 text-white px-4 py-2  rounded w-fit h-fit"
       >
         Browse
       </button>
       {error && <p className="text-red-500 mt-2">{error}</p>}
       
+    </div>
 
+    <div>
       {isReady && (
         <div className="mt-4">
           <h4 className="font-bold">File Content:</h4>
@@ -152,6 +167,8 @@ const FileUpload = () => {
         </div>
       )}
     </div>
+    </div>
+
   );
 };
 
