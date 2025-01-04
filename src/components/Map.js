@@ -85,7 +85,7 @@ const MapPage = () => {
       const group = new L.featureGroup(markersRef.current);
       map.fitBounds(group.getBounds());
     }
-  }, [coordinates, coordinateSystem]); // Reacts to coordinate or EPSG changes
+  }, [coordinates, coordinateSystem]); // Reacts to coordinate 
 
   return (
     <div className="w-full">
