@@ -139,7 +139,7 @@ const FileUpload = () => {
     <div className=" w-full h-fit p-1 flex gap-x-3 justify-between items-center border-2 rounded-md">
 
       <label htmlFor="fileUpload" className=" border-2 ">
-       {file? <p className="">{file.name}</p>:<p>Choose a .CSV or .TXT file with GCP coordinates</p>}
+       {file? <p className="">{file.name}</p>:<p className="p-2 borber-1 rounded-md">Choose a .CSV or .TXT file with GCP coordinates</p>}
       </label>
       <input
         ref={fileInputRef}
@@ -147,7 +147,8 @@ const FileUpload = () => {
         type="file"
         accept=".csv,.txt"
         onChange={handleFileChange}
-        className="hidden"
+        className="hidden rounded-md"
+        
       />
       <button
         onClick={() => fileInputRef.current.click()}

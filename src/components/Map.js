@@ -18,7 +18,7 @@ const MapPage = () => {
   useEffect(() => {
     // Initialize map only once
     if (!mapRef.current) {
-      const map = L.map("map").setView([22.5, 70], 12); // Default to world view
+      const map = L.map("map").setView([22.5, 70], 15); // Default to world view
       mapRef.current = map;
 
       // Add ESRI Satellite tile layer
@@ -85,7 +85,7 @@ const MapPage = () => {
       const group = new L.featureGroup(markersRef.current);
       map.fitBounds(group.getBounds());
     }
-  }, [coordinates, coordinateSystem]); // Reacts to coordinate 
+  }, [coordinates, coordinateSystem]); // Reacts to coordinate or EPSG changes
 
   return (
     <div className="w-full">
